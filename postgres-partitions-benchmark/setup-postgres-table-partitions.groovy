@@ -12,8 +12,7 @@ def sql = Sql.newInstance("$url/$database", user, password, driver)
 try {
     
     def today = new Date().clearTime()
-    today = today + 93
-    def nextSemester = today + 27
+    def nextSemester = today + 180
     def createTableStmt = """
     CREATE TABLE bigtable (
         my_date        timestamp,
