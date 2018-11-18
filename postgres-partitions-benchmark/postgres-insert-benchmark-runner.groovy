@@ -11,51 +11,50 @@ def sql = Sql.newInstance("$url/$database", user, password, driver)
 
 try {
 
-    def insertBigtablePartition = 
+    /*def insertThroughPartition = 
     """
     insert into big_table_DATE(my_date, id, idref, col4, col5, col6, col7, col8)
     values (?, ?, ?, ?, ?, ?, ?, ?)
-    """
+    """*/
 
-    def insertBigtable = 
+    def insertThroughParentTable = 
     """
     insert into bigtable(my_date, id, idref, col4, col5, col6, col7, col8)
     values (?, ?, ?, ?, ?, ?, ?, ?)
     """
 
-    def date = new Date()
-    def otherColumns = "Some important value"
-
-    def startTimeInsert
+    Date myDateColumn = new Date()
+    String otherColumns = "Some important value"
     
-    def startTime = new Date()
-
-    def amountOfInserts = 2960;
-    //def forNameFormatted
-    //def finalInsert 
+    int amountOfInserts = 2960;
     TreeSet<Integer> durationInMillisPerInsert = new TreeSet<Integer>()
-
     TimeDuration duration;
+
+    //def formattedDateForPartitionName
+    //def formatedPartitionInsert 
+
+    Date startTimeOneInsert
+    Date startTimeAllInserts = new Date()
     (1..amountOfInserts).each {
         
-        //forNameFormatted = date.format('yyyyMMdd')
-        //finalInsert = insertBigtablePartition.replaceAll("DATE", forNameFormatted)
+        //formattedDateForPartitionName = myDateColumn.format('yyyyMMdd')
+        //formatedPartitionInsert = insertThroughPartition.replaceAll("DATE", formattedDateForPartitionName)
 
-        startTimeInsert = new Date()
-        //sql.executeInsert finalInsert, [date.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
-        sql.executeInsert insertBigtable, [date.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
-        duration = TimeCategory.minus( new Date(), startTimeInsert )
+        startTimeOneInsert = new Date()
+        //sql.executeInsert formatedPartitionInsert, [myDateColumn.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
+        sql.executeInsert insertThroughParentTable, [myDateColumn.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
+        duration = TimeCategory.minus( new Date(), startTimeOneInsert )
 
         println duration
         durationInMillisPerInsert.add(duration.toMilliseconds())
 
         if (it % 20 == 0) {
-            date += 1
+            myDateColumn += 1
         }
         
     }
 
-    def totalDuration = TimeCategory.minus( new Date(), startTime );
+    def totalDuration = TimeCategory.minus( new Date(), startTimeAllInserts );
     println "Total time execution time: ${totalDuration}"
 
     TreeMap<Integer, Integer> percentilResultInMillis = new TreeMap<Integer, Integer>()
@@ -90,7 +89,7 @@ try {
         println String.format("%.2f - %d millis", it.key, it.value)
     }
 
-    println "\nMedium time: ${totalDuration.toMilliseconds()/amountOfInserts}"
+    println "\nMedium time: ${totalDuration.toMilliseconds()/amountOfInserts} millis"
 
 
 } finally {
