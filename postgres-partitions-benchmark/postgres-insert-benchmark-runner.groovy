@@ -31,14 +31,14 @@ try {
     def startTime = new Date()
 
     def amountOfInserts = 2960;
-    def forNameFormatted
-    def finalInsert 
+    //def forNameFormatted
+    //def finalInsert 
     TreeSet<Integer> durationInMillisPerInsert = new TreeSet<Integer>()
 
     TimeDuration duration;
     (1..amountOfInserts).each {
         
-        forNameFormatted = date.format('yyyyMMdd')
+        //forNameFormatted = date.format('yyyyMMdd')
         //finalInsert = insertBigtablePartition.replaceAll("DATE", forNameFormatted)
 
         startTimeInsert = new Date()
