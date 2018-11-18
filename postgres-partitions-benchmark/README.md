@@ -1,4 +1,4 @@
-#Simple Partioned Table Benchmark for Postgres Database
+# Simple Partioned Table Benchmark for Postgres Database
 
 For running the scripts is necessary to have groovy installed;
 
