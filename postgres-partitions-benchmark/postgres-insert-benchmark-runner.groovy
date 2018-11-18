@@ -11,12 +11,6 @@ def sql = Sql.newInstance("$url/$database", user, password, driver)
 
 try {
 
-    /*def insertThroughPartition = 
-    """
-    insert into big_table_DATE(my_date, id, idref, col4, col5, col6, col7, col8)
-    values (?, ?, ?, ?, ?, ?, ?, ?)
-    """*/
-
     def insertThroughParentTable = 
     """
     insert into bigtable(my_date, id, idref, col4, col5, col6, col7, col8)
@@ -30,18 +24,11 @@ try {
     TreeSet<Integer> durationInMillisPerInsert = new TreeSet<Integer>()
     TimeDuration duration;
 
-    //def formattedDateForPartitionName
-    //def formatedPartitionInsert 
-
     Date startTimeOneInsert
     Date startTimeAllInserts = new Date()
     (1..amountOfInserts).each {
         
-        //formattedDateForPartitionName = myDateColumn.format('yyyyMMdd')
-        //formatedPartitionInsert = insertThroughPartition.replaceAll("DATE", formattedDateForPartitionName)
-
         startTimeOneInsert = new Date()
-        //sql.executeInsert formatedPartitionInsert, [myDateColumn.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
         sql.executeInsert insertThroughParentTable, [myDateColumn.toTimestamp(), it, it, otherColumns, otherColumns, otherColumns, otherColumns, otherColumns];
         duration = TimeCategory.minus( new Date(), startTimeOneInsert )
 
@@ -51,7 +38,6 @@ try {
         if (it % 20 == 0) {
             myDateColumn += 1
         }
-        
     }
 
     def totalDuration = TimeCategory.minus( new Date(), startTimeAllInserts );
