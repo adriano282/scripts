@@ -57,7 +57,7 @@ try {
             else if (percentil <= 0.5)
                 percentilResultInMillis.put(BigDecimal.valueOf(0.50), item)
             else if (percentil <= 0.75)
-                percentilResultInMillis.put(BigDecimal.valueOf(0.50), item)
+                percentilResultInMillis.put(BigDecimal.valueOf(0.75), item)
             else if (percentil <= 0.90)
                 percentilResultInMillis.put(BigDecimal.valueOf(0.90), item)
             else if (percentil <= 0.95)
